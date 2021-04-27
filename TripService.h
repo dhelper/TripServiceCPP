@@ -11,8 +11,7 @@ class User;
 
 class TripService {
 public:
-    static std::list<Trip> GetTripsByUser(User user);
-
+    std::list<Trip> GetTripsByUser(User user);
 };
 
 std::list<Trip> TripService::GetTripsByUser(User user) {
