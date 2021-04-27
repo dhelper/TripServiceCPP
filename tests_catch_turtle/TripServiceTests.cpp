@@ -1,5 +1,6 @@
 #define CATCH_CONFIG_MAIN
 
+#include <fakes/FakeTripDAO.h>
 #include "turtle/catch.hpp"
 #include "fakes/FakeUserSession.h"
 #include "helpers/UserSessionAccessor.h"
@@ -49,12 +50,14 @@ TEST_CASE("Should return trips when logged user is a friend")
     MOCK_EXPECT(fakeUserSession->GetLoggedUser).returns(&user);
     UserSessionAccessor::Set(fakeUserSession);
 
-    TripService tripService;
+    TripServiceBase<FakeTripDAO> tripService;
 
     User myFriend(2);
     myFriend.AddFriend(user);
     myFriend.AddTrip(Trip(1));
     myFriend.AddTrip(Trip(2));
+
+    MOCK_EXPECT(FakeTripDAO::FindTripsByUser).returns(myFriend.Trips());
 
     auto trips = tripService.GetTripsByUser(myFriend);
 
