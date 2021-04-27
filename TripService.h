@@ -1,6 +1,11 @@
 #ifndef TRIPSERVICE_TRIPSERVICE_H
 #define TRIPSERVICE_TRIPSERVICE_H
 
+#include "Trip.h"
+#include <list>
+#include "UserNotLoggedInException.h"
+#include "UserSession.h"
+#include "TripDAO.h"
 
 class User;
 
@@ -36,7 +41,7 @@ std::list<Trip> TripService::GetTripsByUser(User user)
     {
         throw UserNotLoggedInException();
     }
-}
+};
 
 
 #endif //TRIPSERVICE_TRIPSERVICE_H
