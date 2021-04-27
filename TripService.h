@@ -12,7 +12,7 @@ class User;
 template<class T>
 class TripServiceBase {
 public:
-    static std::list<Trip> GetTripsByUser(User user);
+    std::list<Trip> GetTripsByUser(User user);
 };
 
 template<class T>
