@@ -3,8 +3,7 @@
 
 #include <exception>
 
-class UserNotLoggedInException : public std::exception
-{
+class UserNotLoggedInException : public std::exception {
 
 };
 
