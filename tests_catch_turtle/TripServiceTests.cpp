@@ -3,6 +3,7 @@
 #include "turtle/catch.hpp"
 #include "fakes/FakeUserSession.h"
 #include "helpers/UserSessionAccessor.h"
+#include "helpers/TripServiceForTests.h"
 #include "../TripService.h"
 #include "../UserNotLoggedInException.h"
 
@@ -49,12 +50,12 @@ TEST_CASE("Should return trips when logged user is a friend")
     MOCK_EXPECT(fakeUserSession->GetLoggedUser).returns(&user);
     UserSessionAccessor::Set(fakeUserSession);
 
-    TripService tripService;
-
     User myFriend(2);
     myFriend.AddFriend(user);
     myFriend.AddTrip(Trip(1));
     myFriend.AddTrip(Trip(2));
+
+    TripServiceForTests tripService(myFriend.Trips());
 
     auto trips = tripService.GetTripsByUser(myFriend);
 

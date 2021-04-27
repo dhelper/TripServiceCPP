@@ -10,9 +10,10 @@
 class User;
 
 class TripService {
+protected:
+    virtual void FindTripsByUser(User &user, std::list<Trip> &triplist);
 public:
-    static std::list<Trip> GetTripsByUser(User user);
-
+    std::list<Trip> GetTripsByUser(User user);
 };
 
 std::list<Trip> TripService::GetTripsByUser(User user) {
@@ -27,12 +28,16 @@ std::list<Trip> TripService::GetTripsByUser(User user) {
             }
         }
         if (isFriend) {
-            triplist = TripDAO::FindTripsByUser(user);
+            FindTripsByUser(user, triplist);
         }
         return triplist;
     } else {
         throw UserNotLoggedInException();
     }
+}
+
+void TripService::FindTripsByUser(User &user, std::list<Trip> &triplist) {
+    triplist = TripDAO::FindTripsByUser(user);
 };
 
 
