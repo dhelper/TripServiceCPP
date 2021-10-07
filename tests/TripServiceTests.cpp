@@ -2,6 +2,7 @@
 #include "../User.h"
 #include "../UserNotLoggedInException.h"
 #include "helpers/UserSessionAccessor.h"
+#include "fakes/FakeTripDAO.h"
 #include "../TripService.h"
 #undef FAIL
 #undef SUCCEED
@@ -51,13 +52,16 @@ TEST_CASE("Should return trips when logged user is a friend")
     EXPECT_CALL(*fakeUserSession, GetLoggedUser).WillRepeatedly(Return(&user));
     UserSessionAccessor::Set(fakeUserSession);
 
-    TripService tripService;
-
     User myFriend(2);
     myFriend.AddFriend(user);
     myFriend.AddTrip(Trip(1));
     myFriend.AddTrip(Trip(2));
 
+    std::shared_ptr<FakeTripDAO> fakeTripDao(new FakeTripDAO);
+
+    EXPECT_CALL(*fakeTripDao, FindTripsByUser).WillRepeatedly(Return(myFriend.Trips()));
+
+    TripService tripService(fakeTripDao);
     auto trips = tripService.GetTripsByUser(myFriend);
 
     std::vector<Trip> actual(trips.begin(), trips.end());

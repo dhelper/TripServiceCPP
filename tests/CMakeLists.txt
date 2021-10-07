@@ -10,6 +10,7 @@ add_executable(trip_service_tests
         TripServiceTests.cpp
         helpers/UserSessionAccessor.h
         fakes/FakeUserSession.h
+        fakes/FakeTripDAO.h
         )
 
 target_link_libraries(trip_service_tests

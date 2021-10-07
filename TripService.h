@@ -10,7 +10,16 @@
 class User;
 
 class TripService {
+    std::shared_ptr<TripDaoInstance> tripDao;
+
 public:
+    TripService()  {
+        tripDao = std::make_shared<TripDaoInstance>();
+    }
+
+    TripService(const std::shared_ptr<TripDaoInstance> &tripDao) : tripDao(tripDao) {}
+
+
     std::list<Trip> GetTripsByUser(User user);
 };
 
@@ -26,7 +35,7 @@ std::list<Trip> TripService::GetTripsByUser(User user) {
             }
         }
         if (isFriend) {
-            triplist = TripDAO::FindTripsByUser(user);
+            triplist = tripDao->FindTripsByUser(user);
         }
         return triplist;
     } else {
