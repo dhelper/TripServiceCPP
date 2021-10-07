@@ -3,6 +3,9 @@
 
 #include "User.h"
 
+class FakeUserSession;
+class UserSessionAccessor;
+
 class UserSession {
     static UserSession *instance;
 public:
@@ -31,6 +34,9 @@ private:
     UserSession(const UserSession &src) = delete;
 
     UserSession &operator=(const UserSession &rhs) = delete;
+
+    friend FakeUserSession;
+    friend UserSessionAccessor;
 };
 
 #endif //TRIPSERVICE_USERSESSION_H
