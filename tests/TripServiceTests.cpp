@@ -6,6 +6,7 @@
 #undef FAIL
 #undef SUCCEED
 #include "catch.hpp"
+#include "fakes/FakeTripDAO.h"
 
 using Catch::Matchers::Equals;
 using testing::Return;
@@ -51,7 +52,7 @@ TEST_CASE("Should return trips when logged user is a friend")
     EXPECT_CALL(*fakeUserSession, GetLoggedUser).WillRepeatedly(Return(&user));
     UserSessionAccessor::Set(fakeUserSession);
 
-    TripService tripService;
+    TripServiceBase<FakeTripDAO> tripService;
 
     User myFriend(2);
     myFriend.AddFriend(user);
